@@ -1,11 +1,15 @@
 <template>
-  <div>labels</div>
+  <div>
+    <Layout>labels</Layout>
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 
-export default Vue.extend({});
+export default Vue.extend({
+  name: "Labels"
+});
 </script>
 
 <style lang="scss" scoped>
