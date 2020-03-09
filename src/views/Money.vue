@@ -1,37 +1,6 @@
 <template>
   <div>
     <Layout prefix="layout">
-      <div class="tags">
-        <ul class="current">
-          <li>娱乐</li>
-          <li>日用</li>
-          <li>交通</li>
-          <li>花呗</li>
-          <li>娱乐</li>
-          <li>日用</li>
-          <li>交通</li>
-          <li>花呗</li>
-          <li>娱乐</li>
-          <li>日用</li>
-          <li>交通</li>
-          <li>花呗</li>
-          <li>娱乐</li>
-          <li>日用</li>
-          <li>交通</li>
-          <li>花呗</li>
-        </ul>
-        <div class="newAdd">
-          <button>新增</button>
-        </div>
-      </div>
-      <label class="notes">
-        <span>备注</span>
-        <input type="text" placeholder="请在这里输入备注" />
-      </label>
-      <ul class="types">
-        <li class="selected">支出</li>
-        <li>收入</li>
-      </ul>
       <div class="numberPad">
         <div class="output">100</div>
         <div class="button">
@@ -51,6 +20,25 @@
           <button>.</button>
         </div>
       </div>
+      <ul class="types">
+        <li class="selected">支出</li>
+        <li>收入</li>
+      </ul>
+      <label class="notes">
+        <span>备注</span>
+        <input type="text" placeholder="请在这里输入备注" />
+      </label>
+      <div class="tags">
+        <ul class="current">
+          <li>娱乐</li>
+          <li>日用</li>
+          <li>交通</li>
+          <li>花呗</li>
+        </ul>
+        <div class="newAdd">
+          <button>新增</button>
+        </div>
+      </div>
     </Layout>
   </div>
 </template>
@@ -67,8 +55,7 @@ export default Vue.extend({
 <style lang="scss">
 .layout-content {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  flex-direction: column-reverse;
 }
 </style>
 <style lang="scss" scoped>
@@ -79,10 +66,9 @@ export default Vue.extend({
   padding: 16px;
   display: flex;
   flex-direction: column;
-
+  justify-content: flex-end;
+  flex-grow: 1;
   > .current {
-    border: 1px solid red;
-    flex-grow: 1;
     display: flex;
     flex-wrap: wrap;
     > li {
