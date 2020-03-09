@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="content">
+    <div class="content" :class=" prefix && `${prefix}-content`">
       <slot></slot>
     </div>
     <Nav />
@@ -11,7 +11,8 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "Layout"
+  name: "Layout",
+  props: ["prefix"]
 });
 </script>
 
