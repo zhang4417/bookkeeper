@@ -1,39 +1,46 @@
 <template>
   <div class="tags">
     <ul class="current">
-      <li>娱乐</li>
-      <li>日用</li>
-      <li>交通</li>
-      <li>花呗</li>
-      <li>娱乐</li>
-      <li>日用</li>
-      <li>交通</li>
-      <li>花呗</li>
-      <li>娱乐</li>
-      <li>日用</li>
-      <li>交通</li>
-      <li>花呗</li>
-      <li>娱乐</li>
-      <li>日用</li>
-      <li>交通</li>
-      <li>花呗</li>
-      <li>娱乐</li>
-      <li>日用</li>
-      <li>交通</li>
-      <li>花呗</li>
+      <li
+        v-for="tag in tagContent"
+        :key="tag"
+        @click="toggle(tag)"
+        :class="selectedTags.indexOf(tag)>=0 ? 'selected': ''"
+      >{{tag}}</li>
     </ul>
     <div class="newAdd">
-      <button>新增</button>
+      <button @click="create()">新增</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { Component } from "vue-property-decorator";
 
-export default Vue.extend({
-  name: "Tags"
-});
+@Component
+export default class Tags extends Vue {
+  tagContent = ["娱乐", "日用", "交通", "花呗"];
+  selectedTags: string[] = [];
+  toggle(tag: string) {
+    const index = this.selectedTags.indexOf(tag);
+    if (index >= 0) {
+      this.selectedTags.splice(index, 1);
+      console.log(this.selectedTags);
+    } else {
+      this.selectedTags.push(tag);
+      console.log(this.selectedTags);
+    }
+  }
+  create() {
+    const name = window.prompt("请输入标签名");
+    if (name === "") {
+      window.alert("标签名不能为空");
+    } else {
+      this.tagContent.push(name!);
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -48,7 +55,8 @@ export default Vue.extend({
     display: flex;
     flex-wrap: wrap;
     > li {
-      background: #d9d9d9;
+      $bg: #d9d9d9;
+      background: $bg;
       margin-right: 8px;
       padding: 0 10px;
       $h: 24px;
@@ -56,6 +64,9 @@ export default Vue.extend({
       border-radius: $h/2;
       line-height: $h;
       margin-top: 8px;
+      &.selected {
+        background: darken($bg, 50%);
+      }
     }
   }
   > .newAdd {
