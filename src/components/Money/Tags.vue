@@ -16,11 +16,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class Tags extends Vue {
-  tagContent = ["娱乐", "日用", "交通", "花呗"];
+  @Prop(Array) tagContent: string[] | undefined;
   selectedTags: string[] = [];
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
@@ -37,7 +37,9 @@ export default class Tags extends Vue {
     if (name === "") {
       window.alert("标签名不能为空");
     } else {
-      this.tagContent.push(name!);
+      if (this.tagContent) {
+        this.$emit("update:tagContent", [...this.tagContent, name]);
+      }
     }
   }
 }

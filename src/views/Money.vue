@@ -2,9 +2,9 @@
   <div>
     <Layout prefix="layout">
       <NumberPad />
-      <Types xxx="hi" />
+      <Types />
       <Notes />
-      <Tags />
+      <Tags :tagContent.sync="tags" />
     </Layout>
   </div>
 </template>
@@ -19,7 +19,10 @@ import Tags from "@/components/Money/Tags.vue";
 
 export default Vue.extend({
   name: "Money",
-  components: { NumberPad, Types, Notes, Tags }
+  components: { NumberPad, Types, Notes, Tags },
+  data() {
+    return { tags: ["日用", "娱乐", "交通", "花呗"] };
+  }
 });
 </script>
 
