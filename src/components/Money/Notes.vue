@@ -1,6 +1,5 @@
 <template>
   <label class="notes">
-    {{inputValue}}
     <span>备注</span>
     <input type="text" v-model="inputValue" placeholder="请在这里输入备注" />
   </label>
@@ -8,11 +7,15 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 
 @Component
 export default class Notes extends Vue {
   inputValue = "";
+  @Watch("inputValue")
+  onInuptValueChanged(value: string) {
+    this.$emit("update:value", value);
+  }
 }
 </script>
 
