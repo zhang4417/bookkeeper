@@ -24,6 +24,7 @@ type Record = {
   notes: string;
   type: string;
   amount: string;
+  sreateAt?: Date;
 };
 @Component({
   components: { Layout, Tags, Notes, Types, NumberPad }
@@ -42,6 +43,7 @@ export default class Money extends Vue {
   }
   save() {
     const record2 = JSON.parse(JSON.stringify(this.record)); //深拷贝record
+    record2.createAt = new Date();
     this.recordList.push(record2);
   }
   @Watch("recordList")
