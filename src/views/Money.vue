@@ -18,23 +18,22 @@ import Types from "@/components/Money/Types.vue";
 import Notes from "@/components/Money/Notes.vue";
 import Tags from "@/components/Money/Tags.vue";
 import { Component, Watch } from "vue-property-decorator";
+import model from "@/model.ts";
 
-type Record = {
-  tags: string[];
-  notes: string;
-  type: string;
-  amount: string;
-  sreateAt?: Date;
-};
+type RecordItem = {
+    tags: string[];
+    notes: string;
+    type: string;
+    amount: string;
+    createAt?: Date;
+}
 @Component({
   components: { Layout, Tags, Notes, Types, NumberPad }
 })
 export default class Money extends Vue {
   tags = ["日用", "娱乐", "交通", "花呗"];
-  recordList: Record[] = JSON.parse(
-    window.localStorage.getItem("recordList") || "[]"
-  );
-  record: Record = { tags: [], notes: "", type: "-", amount: "0" };
+  recordList: RecordItem[] = JSON.parse(window.localStorage.getItem ('recordList')||'[]');
+  record: RecordItem = { tags: [], notes: "", type: "-", amount: "0" };
   onTags(value: string[]) {
     this.record.tags = value;
   }
@@ -48,7 +47,7 @@ export default class Money extends Vue {
   }
   @Watch("recordList")
   onrecordListChanged() {
-    window.localStorage.setItem("recordList", JSON.stringify(this.recordList));
+    window.localStorage.setItem('recordList',JSON.stringify(this.recordList));
   }
 }
 </script>
