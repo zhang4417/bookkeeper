@@ -2,25 +2,13 @@
   <div>
     <Layout>
       <ul class="tags">
-        <li>
-          <span>日用</span>
-          <Icon name="right" />
-        </li>
-        <li>
-          <span>娱乐</span>
-          <Icon name="right" />
-        </li>
-        <li>
-          <span>交通</span>
-          <Icon name="right" />
-        </li>
-        <li>
-          <span>花呗</span>
+        <li v-for="tag in data" :key="tag">
+          <span>{{tag}}</span>
           <Icon name="right" />
         </li>
       </ul>
       <div class="newTags">
-        <button>新增标签</button>
+        <button @click="createTags()">新增标签</button>
       </div>
     </Layout>
   </div>
@@ -28,10 +16,17 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { Component } from "vue-property-decorator";
+import tagsListModel from "@/model/tagsListModel";
 
-export default Vue.extend({
-  name: "Labels"
-});
+tagsListModel.fetch();
+@Component
+export default class Labels extends Vue {
+  data = tagsListModel.data;
+  createTags() {
+    tagsListModel.create();
+  }
+}
 </script>
 
 <style lang="scss" scoped>
