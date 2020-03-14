@@ -12,17 +12,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Layout from "@/components/Layout.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import Types from "@/components/Money/Types.vue";
 import Notes from "@/components/Money/Notes.vue";
 import Tags from "@/components/Money/Tags.vue";
 import { Component, Watch } from "vue-property-decorator";
 import recordListModel from "@/model/recordListModel.ts";
-import tagsListModel from "../model/tagsListModel";
+import tagsListModel from "@/model/tagsListModel";
 
 @Component({
-  components: { Layout, Tags, Notes, Types, NumberPad }
+  components: { Tags, Notes, Types, NumberPad }
 })
 export default class Money extends Vue {
   tags = tagsListModel.data;
