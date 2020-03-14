@@ -31,7 +31,7 @@ export default class Tags extends Vue {
       this.selectedTags.push(tag);
       console.log(this.selectedTags);
     }
-    this.$emit('update:value',this.selectedTags)
+    this.$emit("update:value", this.selectedTags);
   }
   create() {
     const name = window.prompt("请输入标签名");
@@ -48,6 +48,7 @@ export default class Tags extends Vue {
 
 <style lang="scss" scoped>
 .tags {
+  background: white;
   font-size: 14px;
   padding: 16px;
   display: flex;
