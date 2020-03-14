@@ -1,16 +1,18 @@
 <template>
   <label class="notes">
-    <span>备注</span>
-    <input type="text" v-model="inputValue" placeholder="请在这里输入备注" />
+    <span>{{fileName}}</span>
+    <input type="text" v-model="inputValue" :placeholder="placeholder" />
   </label>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
+import { Component, Watch, Prop } from "vue-property-decorator";
 
 @Component
 export default class Notes extends Vue {
+  @Prop({required:true}) fileName!: string;
+  @Prop() placeholder?: string;
   inputValue = "";
   @Watch("inputValue")
   onInuptValueChanged(value: string) {
