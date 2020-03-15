@@ -21,7 +21,6 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import Icon from "@/components/Icon.vue";
 import Notes from "@/components/Notes.vue";
 import Button from "@/components/Button.vue";
 import tagsListModel from "@/model/tagsListModel";
@@ -31,7 +30,7 @@ import tagsListModel from "@/model/tagsListModel";
 })
 export default class EditLabel extends Vue {
   tag!: string;
-  tags = tagsListModel.fetch();
+  tags = window.tagList;
 
   created() {
     const id = this.$route.params.id;

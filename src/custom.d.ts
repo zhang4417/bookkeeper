@@ -5,3 +5,12 @@ type RecordItem = {
     amount: string;
     createAt?: Date;
 }
+type tagsListModel = {
+    data: string[];
+    fetch: () => string[];
+    create: () => void;
+    save: () => void;
+};
+interface Window {
+    tagList: string[];
+}

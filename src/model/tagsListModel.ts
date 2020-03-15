@@ -1,9 +1,3 @@
-type tagsListModel = {
-    data: string[];
-    fetch: () => string[];
-    create: () => void;
-    save: () => void;
-};
 const tagsListModel: tagsListModel = {
     data: [],
     fetch() {

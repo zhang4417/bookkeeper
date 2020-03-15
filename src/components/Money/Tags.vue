@@ -2,7 +2,7 @@
   <div class="tags">
     <ul class="current">
       <li
-        v-for="tag in tagContent"
+        v-for="tag in tagList"
         :key="tag"
         @click="toggle(tag)"
         :class="selectedTags.indexOf(tag)>=0 ? 'selected': ''"
@@ -21,37 +21,19 @@ import tagsListModel from "@/model/tagsListModel";
 
 @Component
 export default class Tags extends Vue {
-  @Prop(Array) tagContent: string[] | undefined;
+  tagList=window.tagList;
   selectedTags: string[] = [];
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
     if (index >= 0) {
       this.selectedTags.splice(index, 1);
-      console.log(this.selectedTags);
     } else {
       this.selectedTags.push(tag);
-      console.log(this.selectedTags);
     }
     this.$emit("update:value", this.selectedTags);
   }
   create() {
-    const name = window.prompt("请输入标签名");
-    if (name === "") {
-      window.alert("标签名不能为空");
-    }
-    if (name === null) {
-      return;
-    }
-    if (this.tagContent) {
-      if (this.tagContent.indexOf(name!) >= 0) {
-        window.alert("标签名重复");
-      } else {
-        this.$emit("update:tagContent", [...this.tagContent, name]);
-        const data = tagsListModel.fetch();
-        data.push(name!);
-        tagsListModel.save();
-      }
-    }
+    tagsListModel.create();
   }
 }
 </script>
