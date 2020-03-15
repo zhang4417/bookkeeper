@@ -1,12 +1,16 @@
 const recordListModel = {
+    data: [] as RecordItem[],
     fetch() {
-        return (JSON.parse(window.localStorage.getItem("recordList") || "[]") as RecordItem[]);
+        this.data = JSON.parse(window.localStorage.getItem("recordList") || "[]") as RecordItem[];
+        return this.data;
     },
-    save(data: RecordItem[]) {
-        window.localStorage.setItem("recordList", JSON.stringify(data))
+    add(record: RecordItem) {
+        const record2 = JSON.parse(JSON.stringify(record)); //深拷贝record
+        record2.createAt = new Date();
+        this.data.push(record2);
     },
-    clone(data: RecordItem | RecordItem[]) {
-        return (JSON.parse(JSON.stringify(data)) as RecordItem)
+    save() {
+        window.localStorage.setItem("recordList", JSON.stringify(this.data))
     }
 };
 
