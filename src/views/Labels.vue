@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Layout>
+    <Layout class="layout-wraper">
       <div class="tags">
         <router-link class="tag" v-for="tag in data" :key="tag" :to="`/labels/edit/${tag}`">
           <span>{{tag}}</span>
@@ -26,6 +26,7 @@ tagsListModel.fetch();
 })
 export default class Labels extends Vue {
   data = tagsListModel.data;
+
   createTags() {
     tagsListModel.create();
   }
@@ -33,6 +34,9 @@ export default class Labels extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.layout-wraper {
+  background: white;
+}
 .tags {
   padding-left: 16px;
   .tag {

@@ -1,13 +1,19 @@
 <template>
   <Layout>
     <div class="navbar">
-      <Icon class="leftContent" name="left" />
+      <Icon class="leftContent" name="left" @click="goBack" />
       <span class="middleContent">编辑标签</span>
       <span class="rightContent"></span>
     </div>
-    <Notes class="notes" fileName="标签" placeholder="请输入标签名" />
+    <Notes
+      class="notes"
+      :inputValue="tag"
+      @update:value="update"
+      fileName="标签"
+      placeholder="请输入标签名"
+    />
     <div class="button-wraper">
-      <Button>删除标签</Button>
+      <Button @click="remove">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -18,11 +24,45 @@ import { Component } from "vue-property-decorator";
 import Icon from "@/components/Icon.vue";
 import Notes from "@/components/Notes.vue";
 import Button from "@/components/Button.vue";
+import tagsListModel from "@/model/tagsListModel";
 
 @Component({
   components: { Notes, Button }
 })
-export default class EditLabel extends Vue {}
+export default class EditLabel extends Vue {
+  tag!: string;
+  tags = tagsListModel.fetch();
+
+  created() {
+    const id = this.$route.params.id;
+    if (this.tags.indexOf(id) >= 0) {
+      this.tag = id;
+    } else {
+      this.$router.replace("/404");
+    }
+  }
+  goBack() {
+    const id = this.$route.params.id;
+    const index = this.tags.indexOf(id);
+    if (this.tag !== "") {
+      this.tags.splice(index, 1, this.tag);
+      console.log(this.tags);
+      tagsListModel.save();
+    }
+    this.$router.back();
+  }
+  update(value: string) {
+    this.tag = value;
+  }
+  remove() {
+    const id = this.$route.params.id;
+    const index = this.tags.indexOf(id);
+    this.tags.splice(index, 1);
+    console.log(this.tags);
+    tagsListModel.save();
+    this.$router.back();
+  }
+}
 </script>
 
 <style lang="scss" scoped>

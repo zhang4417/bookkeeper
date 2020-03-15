@@ -1,7 +1,12 @@
 <template>
   <label class="notes">
     <span>{{fileName}}</span>
-    <input type="text" v-model="inputValue" :placeholder="placeholder" />
+    <input
+      type="text"
+      :value="inputValue"
+      @input="onInuptValueChanged($event.target.value)"
+      :placeholder="placeholder"
+    />
   </label>
 </template>
 
@@ -11,10 +16,10 @@ import { Component, Watch, Prop } from "vue-property-decorator";
 
 @Component
 export default class Notes extends Vue {
-  @Prop({required:true}) fileName!: string;
+  @Prop({ default: "" }) inputValue!: string;
+  @Prop({ required: true }) fileName!: string;
   @Prop() placeholder?: string;
-  inputValue = "";
-  @Watch("inputValue")
+
   onInuptValueChanged(value: string) {
     this.$emit("update:value", value);
   }
