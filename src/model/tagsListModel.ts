@@ -15,6 +15,9 @@ const tagsListModel: tagsListModel = {
         if (name === '') {
             return window.alert('标签名不能为空')
         }
+        if (name === null) {
+            return;
+        }
         if (this.data.indexOf(name!) >= 0) {
             return window.alert('Duplicated')
         }
