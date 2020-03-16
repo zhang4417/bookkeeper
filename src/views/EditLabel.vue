@@ -23,14 +23,14 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Notes from "@/components/Notes.vue";
 import Button from "@/components/Button.vue";
-import tagsListModel from "@/model/tagsListModel";
+import store2 from "@/store/index2.ts";
 
 @Component({
   components: { Notes, Button }
 })
 export default class EditLabel extends Vue {
   tag!: string;
-  tags = window.tagList;
+  tags = store2.fetchTags();
 
   created() {
     const id = this.$route.params.id;
@@ -46,7 +46,7 @@ export default class EditLabel extends Vue {
     if (this.tag !== "") {
       this.tags.splice(index, 1, this.tag);
       console.log(this.tags);
-      tagsListModel.save();
+      store2.saveTags();
     }
     this.$router.back();
   }
@@ -58,7 +58,7 @@ export default class EditLabel extends Vue {
     const index = this.tags.indexOf(id);
     this.tags.splice(index, 1);
     console.log(this.tags);
-    tagsListModel.save();
+    store2.saveTags();
     this.$router.back();
   }
 }

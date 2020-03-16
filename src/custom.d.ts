@@ -6,11 +6,8 @@ type RecordItem = {
     createAt?: Date;
 }
 type tagsListModel = {
-    data: string[];
-    fetch: () => string[];
-    create: () => void;
-    save: () => void;
+    tags: string[];
+    fetchTags: () => string[];
+    createTags: () => void;
+    saveTags: () => void;
 };
-interface Window {
-    tagList: string[];
-}

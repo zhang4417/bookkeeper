@@ -2,7 +2,7 @@
   <div>
     <Layout class="layout-wraper">
       <div class="tags">
-        <router-link class="tag" v-for="tag in data" :key="tag" :to="`/labels/edit/${tag}`">
+        <router-link class="tag" v-for="tag in tags" :key="tag" :to="`/labels/edit/${tag}`">
           <span>{{tag}}</span>
           <Icon name="right" />
         </router-link>
@@ -17,16 +17,16 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagsListModel from "@/model/tagsListModel";
+import store2 from "@/store/index2.ts";
 import Button from "../components/Button.vue";
 
 @Component({
   components: { Button }
 })
 export default class Labels extends Vue {
-  data = window.tagList;
+  tags = store2.fetchTags();
   createTags() {
-    tagsListModel.create();
+    store2.createTags();
   }
 }
 </script>

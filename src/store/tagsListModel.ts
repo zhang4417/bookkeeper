@@ -1,10 +1,10 @@
 const tagsListModel: tagsListModel = {
-    data: [],
-    fetch() {
-        this.data = JSON.parse(window.localStorage.getItem('tagsList') || '[]')
-        return this.data
+    tags: [],
+    fetchTags() {
+        this.tags = JSON.parse(window.localStorage.getItem('tagsList') || '[]')
+        return this.tags
     },
-    create() {
+    createTags() {
         const name = window.prompt('请输入标签名')
         if (name === '') {
             return window.alert('标签名不能为空')
@@ -12,16 +12,16 @@ const tagsListModel: tagsListModel = {
         if (name === null) {
             return;
         }
-        if (this.data.indexOf(name!) >= 0) {
+        if (this.tags.indexOf(name!) >= 0) {
             return window.alert('Duplicated')
         }
-        this.data.push(name!)
-        this.save()
+        this.tags.push(name!)
+        this.saveTags()
         return window.alert('Success')
 
     },
-    save() {
-        window.localStorage.setItem('tagsList', JSON.stringify(this.data))
+    saveTags() {
+        window.localStorage.setItem('tagsList', JSON.stringify(this.tags))
     }
 }
 

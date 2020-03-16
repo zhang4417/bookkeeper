@@ -9,19 +9,19 @@
       >{{tag}}</li>
     </ul>
     <div class="newAdd">
-      <button @click="create()">新增</button>
+      <button @click="createTags()">新增</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
-import tagsListModel from "@/model/tagsListModel";
+import { Component } from "vue-property-decorator";
+import store2 from "@/store/index2.ts";
 
 @Component
 export default class Tags extends Vue {
-  tagList=window.tagList;
+  tagList = store2.fetchTags();
   selectedTags: string[] = [];
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
@@ -32,8 +32,8 @@ export default class Tags extends Vue {
     }
     this.$emit("update:value", this.selectedTags);
   }
-  create() {
-    tagsListModel.create();
+  createTags() {
+    store2.createTags();
   }
 }
 </script>
