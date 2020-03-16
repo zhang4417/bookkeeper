@@ -17,16 +17,22 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import store2 from "@/store/index2.ts";
 import Button from "../components/Button.vue";
 
 @Component({
-  components: { Button }
+  components: { Button },
+  computed: {
+    tags() {
+      return this.$store.state.tags;
+    }
+  }
 })
 export default class Labels extends Vue {
-  tags = store2.fetchTags();
+  created() {
+    this.$store.commit("fetchTags");
+  }
   createTags() {
-    store2.createTags();
+    this.$store.commit("createTags");
   }
 }
 </script>

@@ -3,13 +3,52 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
+    tags: [] as string[],
+    recordList: [] as RecordItem[]
   },
   mutations: {
+    fetchTags(state) {
+      state.tags = JSON.parse(window.localStorage.getItem('tagsList') || '[]')
+    },
+    createTags(state) {
+      const name = window.prompt('请输入标签名')
+      if (name === '') {
+        return window.alert('标签名不能为空')
+      }
+      if (name === null) {
+        return;
+      }
+      if (state.tags.indexOf(name!) >= 0) {
+        return window.alert('Duplicated')
+      }
+      state.tags.push(name!)
+      store.commit('saveTags')
+      return window.alert('Success')
+    },
+    saveTags(state) {
+      window.localStorage.setItem('tagsList', JSON.stringify(state.tags))
+    },
+
+    fetchRecord(state) {
+      state.recordList = JSON.parse(window.localStorage.getItem("recordList") || "[]") as RecordItem[];
+      return state.recordList;
+    },
+    addRecord(state, record: RecordItem) {
+      const record2 = JSON.parse(JSON.stringify(record)); //深拷贝record
+      record2.createAt = new Date();
+      state.recordList.push(record2);
+      store.commit('saveRecord');
+    },
+    saveRecord(state) {
+      window.localStorage.setItem("recordList", JSON.stringify(state.recordList))
+    }
   },
   actions: {
   },
   modules: {
   }
 })
+
+export default store
