@@ -2,6 +2,18 @@
   <Layout>
     <Tabs :data-source="typeList" :value.sync=" type " classPrefix="type" />
     <Tabs :data-source="scheduleList" :value.sync=" schedule " classPrefix="schedule" />
+    <ul class="group-wraper">
+      <li class="group" v-for="group in groupList" :key="group.title">
+        <h1 class="title">{{beautiful(group.title)}}</h1>
+        <ul class="item-wraper" v-for="item in group.items" :key="item.createAt">
+          <li class="item">
+            <span class="tags">{{tagsString(item.tags)}}</span>
+            <span class="notes">{{item.notes}}</span>
+            <span>¥{{item.amount}}</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </Layout>
 </template>
 
@@ -9,7 +21,14 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
+import dayjs from "dayjs";
+import clone from "@/lib/clone";
 
+type HashItem = {
+  title: string;
+  total?: number;
+  items: RecordItem[];
+};
 @Component({
   components: { Tabs }
 })
@@ -25,6 +44,49 @@ export default class Statistics extends Vue {
     { value: "week", text: "按周" },
     { value: "month", text: "按月" }
   ];
+  get recordList() {
+    return this.$store.state.recordList as RecordItem[];
+  }
+  created() {
+    this.$store.commit("fetchRecord");
+  }
+
+  get groupList() {
+    const newList = clone(this.recordList).sort(
+      (a, b) => -dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf()
+    );
+    const x = dayjs(newList[0].createAt).format("YYYY-MM-DD");
+    const hashTab: HashItem[] = [{ title: x, items: [newList[0]] }];
+
+    for (let i = 0; i < newList.length; i++) {
+      const current = newList[i];
+      const last = hashTab[hashTab.length - 1];
+      if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {
+        last.items.push(current);
+      } else {
+        return hashTab.push({
+          title: dayjs(current.createAt).format("YYYY-MM-DD"),
+          items: [current]
+        });
+      }
+    }
+    return hashTab;
+  }
+  beautiful(item: string) {
+    const now = dayjs();
+    if (dayjs(item).isSame(now, "day")) {
+      return "今天";
+    } else if (dayjs(item).isSame(now.subtract(1, "day"), "day")) {
+      return "昨天";
+    } else if (dayjs(item).isSame(now.subtract(2, "day"), "day")) {
+      return "前天";
+    } else {
+      return dayjs(item).format("YYYY年M月D日");
+    }
+  }
+  tagsString(tags: string[]) {
+    return tags.length === 0 ? "空" : tags.join(",");
+  }
 }
 </script>
 
@@ -41,5 +103,27 @@ export default class Statistics extends Vue {
 ::v-deep .schedule-tab-item {
   font-size: 18px;
   height: 48px;
+}
+%item {
+  min-height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+}
+.item {
+  @extend %item;
+  border-bottom: 1px solid #f5f5f5;
+  background: white;
+  .notes {
+    margin-right: auto;
+    margin-left: 8px;
+  }
+  .tags {
+    width: 20%;
+  }
+}
+.title {
+  @extend %item;
 }
 </style>
