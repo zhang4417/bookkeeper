@@ -16,12 +16,12 @@ import { Component, Watch, Prop } from "vue-property-decorator";
 
 @Component
 export default class Notes extends Vue {
-  @Prop({ default: "" }) inputValue!: string;
+  @Prop({ type: String, default: "" }) inputValue!: string;
   @Prop({ required: true }) fileName!: string;
   @Prop() placeholder?: string;
 
   onInuptValueChanged(value: string) {
-    this.$emit("update:value", value);
+    this.$emit("update:inputValue", value);
   }
 }
 </script>

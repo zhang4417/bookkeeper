@@ -30,7 +30,7 @@ const store = new Vuex.Store({
       }
       state.tags.push(name!)
       store.commit('saveTags')
-      return window.alert('Success')
+      window.alert('Success')
     },
     saveTags(state) {
       window.localStorage.setItem('tagsList', JSON.stringify(state.tags))
