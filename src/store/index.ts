@@ -10,7 +10,12 @@ const store = new Vuex.Store({
   },
   mutations: {
     fetchTags(state) {
-      state.tags = JSON.parse(window.localStorage.getItem('tagsList') || '[]')
+      const dataTags = JSON.parse(window.localStorage.getItem('tagsList') || '[]')
+      if (dataTags.length === 0) {
+        return state.tags
+      } else {
+        return state.tags = dataTags
+      }
     },
     createTags(state) {
       const name = window.prompt('请输入标签名')

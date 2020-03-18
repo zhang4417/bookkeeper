@@ -3,7 +3,7 @@
     <Layout prefix="layout">
       <NumberPad :value.sync="record.amount" @saveRecord="saveRecord()" />
       <Tabs :dataSource="typeList" :value.sync="record.type" />
-      <Notes fileName="备注" placeholder="请在这里输入备注" @update:value="onchangeNotes" />
+      <Notes fileName="备注" placeholder="请在这里输入备注" :value.sync="record.notes" />
       <Tags @update:value="onchangeTags" />
     </Layout>
   </div>
@@ -42,6 +42,8 @@ export default class Money extends Vue {
   }
   saveRecord() {
     this.$store.commit("addRecord", this.record);
+    window.alert("已保存");
+    this.record.notes = "";
   }
 }
 </script>

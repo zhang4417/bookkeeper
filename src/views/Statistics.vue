@@ -2,7 +2,7 @@
   <Layout>
     <Tabs :data-source="typeList" :value.sync=" type " classPrefix="type" />
     <Tabs :data-source="scheduleList" :value.sync=" schedule " classPrefix="schedule" />
-    <ul class="group-wraper">
+    <ul v-if="groupList.length>0" class="group-wraper">
       <li class="group" v-for="group in groupList" :key="group.title">
         <h1 class="title">
           {{beautiful(group.title)}}
@@ -17,6 +17,10 @@
         </ul>
       </li>
     </ul>
+    <div v-else class="xxx-wraper">
+      <Icon name="null" class="xxx" />
+      <span class="message">你还没添加任何记录</span>
+    </div>
   </Layout>
 </template>
 
@@ -26,6 +30,7 @@ import { Component } from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
+import Icon from "@/components/Icon.vue";
 
 type HashItem = {
   title: string;
@@ -98,7 +103,7 @@ export default class Statistics extends Vue {
     }
   }
   tagsString(tags: string[]) {
-    return tags.length === 0 ? "空" : tags.join(",");
+    return tags.length === 0 ? "空" : tags.join("，");
   }
 }
 </script>
@@ -138,5 +143,27 @@ export default class Statistics extends Vue {
 }
 .title {
   @extend %item;
+  font-size: 18px;
+}
+.xxx-wraper {
+  max-height: 200px;
+  max-width: 200px;
+  padding: 16px;
+  margin: 100px auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  .xxx {
+    &.icon {
+      min-width: 100px;
+      min-height: 100px;
+    }
+  }
+  .message {
+    font-size: 16px;
+    padding-top: 16px;
+    color: #c4c4c4;
+  }
 }
 </style>
