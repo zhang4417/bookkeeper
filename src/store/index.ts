@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    tags: [] as string[],
+    tags: ["娱乐", "生活", "奖金", "交通"] as string[],
     recordList: [] as RecordItem[]
   },
   mutations: {

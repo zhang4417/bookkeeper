@@ -4,7 +4,6 @@
       <NumberPad :value.sync="record.amount" @saveRecord="saveRecord()" />
       <Tabs :dataSource="typeList" :value.sync="record.type" />
       <Notes fileName="备注" placeholder="请在这里输入备注" @update:value="onchangeNotes" />
-      <div>{{recordList}}</div>
       <Tags @update:value="onchangeTags" />
     </Layout>
   </div>
@@ -31,7 +30,7 @@ export default class Money extends Vue {
     { value: "-", text: "支出" },
     { value: "+", text: "收入" }
   ];
-  record: RecordItem = { tags: [], notes: "", type: "-", amount: "0" };
+  record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
   created() {
     this.$store.commit("fetchRecord");
   }

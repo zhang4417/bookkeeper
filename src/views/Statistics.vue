@@ -4,7 +4,10 @@
     <Tabs :data-source="scheduleList" :value.sync=" schedule " classPrefix="schedule" />
     <ul class="group-wraper">
       <li class="group" v-for="group in groupList" :key="group.title">
-        <h1 class="title">{{beautiful(group.title)}}</h1>
+        <h1 class="title">
+          {{beautiful(group.title)}}
+          <span>¥{{group.total}}</span>
+        </h1>
         <ul class="item-wraper" v-for="item in group.items" :key="item.createAt">
           <li class="item">
             <span class="tags">{{tagsString(item.tags)}}</span>
@@ -52,25 +55,35 @@ export default class Statistics extends Vue {
   }
 
   get groupList() {
-    const newList = clone(this.recordList).sort(
-      (a, b) => -dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf()
-    );
-    const x = dayjs(newList[0].createAt).format("YYYY-MM-DD");
-    const hashTab: HashItem[] = [{ title: x, items: [newList[0]] }];
-
-    for (let i = 0; i < newList.length; i++) {
-      const current = newList[i];
-      const last = hashTab[hashTab.length - 1];
-      if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {
-        last.items.push(current);
-      } else {
-        return hashTab.push({
-          title: dayjs(current.createAt).format("YYYY-MM-DD"),
-          items: [current]
-        });
+    const newList = clone(this.recordList)
+      .filter(item => item.type === this.type)
+      .sort(
+        (a, b) => -dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf()
+      );
+    if (newList.length === 0) {
+      return [];
+    } else {
+      const titleTime = dayjs(newList[0].createAt).format("YYYY-MM-DD");
+      const allAmount = newList.reduce((sum, item) => {
+        return sum + item.amount;
+      }, 0);
+      const hashTab: HashItem[] = [
+        { title: titleTime, total: allAmount, items: [newList[0]] }
+      ];
+      for (let i = 1; i < newList.length; i++) {
+        const current = newList[i];
+        const last = hashTab[hashTab.length - 1];
+        if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {
+          last.items.push(current);
+        } else {
+          return hashTab.push({
+            title: dayjs(current.createAt).format("YYYY-MM-DD"),
+            items: [current]
+          });
+        }
       }
+      return hashTab;
     }
-    return hashTab;
   }
   beautiful(item: string) {
     const now = dayjs();
