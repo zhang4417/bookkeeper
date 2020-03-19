@@ -8,8 +8,12 @@
       <Icon name="money" />
       <span>记账</span>
     </router-link>
-    <router-link to="/statistics" class="item" active-class="selected">
-      <Icon name="statistics" />
+    <router-link to="/bill" class="item" active-class="selected">
+      <Icon name="bill" />
+      <span>账单</span>
+    </router-link>
+    <router-link to="/chart" class="item" active-class="selected">
+      <Icon name="overview" />
       <span>统计</span>
     </router-link>
   </nav>

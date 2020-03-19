@@ -5,13 +5,7 @@
       <span class="middleContent">编辑标签</span>
       <span class="rightContent"></span>
     </div>
-    <Notes
-      class="notes"
-      :inputValue="tag"
-      @update:value="update"
-      fileName="标签"
-      placeholder="请输入标签名"
-    />
+    <Notes class="notes" :inputValue.sync="tag" fileName="标签" placeholder="请输入标签名" />
     <div class="button-wraper">
       <Button @click="remove">删除标签</Button>
     </div>
@@ -32,9 +26,12 @@ export default class EditLabel extends Vue {
   get tags() {
     return this.$store.state.tags;
   }
+  get tagsValue() {
+    return this.tags.map((item: Tag) => item.value);
+  }
   created() {
     const id = this.$route.params.id;
-    if (this.tags.indexOf(id) >= 0) {
+    if (this.tagsValue.indexOf(id) >= 0) {
       this.tag = id;
     } else {
       this.$router.replace("/404");
@@ -42,19 +39,16 @@ export default class EditLabel extends Vue {
   }
   goBack() {
     const id = this.$route.params.id;
-    const index = this.tags.indexOf(id);
+    const index = this.tagsValue.indexOf(id);
     if (this.tag !== "") {
-      this.tags.splice(index, 1, this.tag);
+      this.tags[index].value = this.tag;
       this.$store.commit("saveTags");
     }
     this.$router.back();
   }
-  update(value: string) {
-    this.tag = value;
-  }
   remove() {
     const id = this.$route.params.id;
-    const index = this.tags.indexOf(id);
+    const index = this.tagsValue.indexOf(id);
     this.tags.splice(index, 1);
     this.$store.commit("saveTags");
     this.$router.back();

@@ -5,30 +5,27 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    tags: ["娱乐", "生活", "奖金", "交通"] as string[],
+    tags: [{ value: "娱乐", name: "yuLe" }, { value: "购物", name: "gouWu" }, { value: "交通", name: "jiaoTong" }, { value: "生活", name: "riYongPin" }] as Tag[],
     recordList: [] as RecordItem[]
   },
   mutations: {
     fetchTags(state) {
-      const dataTags = JSON.parse(window.localStorage.getItem('tagsList') || '[]')
+      const dataTags: Tag[] = JSON.parse(window.localStorage.getItem('tagsList') || '[]')
       if (dataTags.length === 0) {
         return state.tags
       } else {
         return state.tags = dataTags
       }
     },
-    createTags(state) {
-      const name = window.prompt('请输入标签名')
-      if (name === '') {
+    createTags(state, record) {
+      if (record.value === '') {
         return window.alert('标签名不能为空')
       }
-      if (name === null) {
-        return;
-      }
-      if (state.tags.indexOf(name!) >= 0) {
+      const tagsValue = state.tags.map(item => item.value)
+      if (tagsValue.indexOf(record.value!) >= 0) {
         return window.alert('Duplicated')
       }
-      state.tags.push(name!)
+      state.tags.push(record!)
       store.commit('saveTags')
       window.alert('Success')
     },

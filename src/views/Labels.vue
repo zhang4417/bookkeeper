@@ -2,13 +2,24 @@
   <div>
     <Layout class="layout-wraper">
       <div class="tags">
-        <router-link class="tag" v-for="tag in tags" :key="tag" :to="`/labels/edit/${tag}`">
-          <span>{{tag}}</span>
+        <router-link
+          class="tag"
+          v-for="tag in tags"
+          :key="tag.value"
+          :to="`/labels/edit/${tag.value}`"
+        >
+          <span>
+            <Icon :name="tag.name" />
+            {{tag.value}}
+          </span>
+
           <Icon name="right" />
         </router-link>
       </div>
       <div class="newTags">
-        <Button @click="createTags()">新增标签</Button>
+        <router-link to="/create">
+          <Button @click="createTags()">新增标签</Button>
+        </router-link>
       </div>
     </Layout>
   </div>

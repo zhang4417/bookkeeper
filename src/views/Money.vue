@@ -30,11 +30,17 @@ export default class Money extends Vue {
     { value: "-", text: "支出" },
     { value: "+", text: "收入" }
   ];
-  record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
+  record: RecordItem = {
+    tags: [],
+    iconName: "",
+    notes: "",
+    type: "-",
+    amount: 0
+  };
   created() {
     this.$store.commit("fetchRecord");
   }
-  onchangeTags(value: string[]) {
+  onchangeTags(value: Tag[]) {
     this.record.tags = value;
   }
   saveRecord() {

@@ -34,13 +34,13 @@ import Icon from "@/components/Icon.vue";
 
 type HashItem = {
   title: string;
-  total?: number;
+  total: number;
   items: RecordItem[];
 };
 @Component({
   components: { Tabs }
 })
-export default class Statistics extends Vue {
+export default class Bill extends Vue {
   type = "-";
   schedule = "day";
   typeList = [
@@ -52,41 +52,50 @@ export default class Statistics extends Vue {
     { value: "week", text: "按周" },
     { value: "month", text: "按月" }
   ];
-  get recordList() {
-    return this.$store.state.recordList as RecordItem[];
-  }
   created() {
     this.$store.commit("fetchRecord");
+  }
+  get recordList() {
+    return this.$store.state.recordList as RecordItem[];
   }
 
   get groupList() {
     const newList = clone(this.recordList)
       .filter(item => item.type === this.type)
       .sort(
-        (a, b) => -dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf()
+        (a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf()
       );
+    //
     if (newList.length === 0) {
       return [];
     } else {
       const titleTime = dayjs(newList[0].createAt).format("YYYY-MM-DD");
-      const allAmount = newList.reduce((sum, item) => {
-        return sum + item.amount;
-      }, 0);
+      // let allAmount = newList.reduce((sum, item) => sum + item.amount, 0);
+
       const hashTab: HashItem[] = [
-        { title: titleTime, total: allAmount, items: [newList[0]] }
+        {
+          title: titleTime,
+          total: newList[0].amount,
+          items: [newList[0]]
+        }
       ];
+
       for (let i = 1; i < newList.length; i++) {
         const current = newList[i];
         const last = hashTab[hashTab.length - 1];
         if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {
+          console.log("hihi");
+          last.total += current.amount;
           last.items.push(current);
         } else {
-          return hashTab.push({
-            title: dayjs(current.createAt).format("YYYY-MM-DD"),
+          hashTab.push({
+            title: dayjs(newList[i].createAt).format("YYYY-MM-DD"),
+            total: current.amount,
             items: [current]
           });
         }
       }
+      console.log("hihihi");
       return hashTab;
     }
   }

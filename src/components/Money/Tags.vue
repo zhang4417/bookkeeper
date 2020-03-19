@@ -3,13 +3,17 @@
     <ul class="current">
       <li
         v-for="tag in tagList"
-        :key="tag"
+        :key="tag.value"
         @click="toggle(tag)"
         :class="selectedTags.indexOf(tag)>=0 ? 'selected': ''"
-      >{{tag}}</li>
+      >
+        {{tag.value}}
+        <Icon :name="tag.name" />
+      </li>
     </ul>
     <div class="newAdd">
-      <button @click="createTags()">新增</button>
+      <!-- <button class="add" @click="createTags()">新增</button> -->
+      <router-link class="add" to="/create">新增</router-link>
     </div>
   </div>
 </template>
@@ -18,19 +22,16 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 
-@Component({
-  computed: {
-    tagList() {
-      return this.$store.state.tags;
-    }
-  }
-})
+@Component({})
 export default class Tags extends Vue {
-  selectedTags: string[] = [];
+  get tagList() {
+    return this.$store.state.tags as Tag[];
+  }
+  selectedTags = [{ value: "", name: "" }];
   created() {
     this.$store.commit("fetchTags");
   }
-  toggle(tag: string) {
+  toggle(tag: Tag) {
     const index = this.selectedTags.indexOf(tag);
     if (index >= 0) {
       this.selectedTags.splice(index, 1);
@@ -39,9 +40,9 @@ export default class Tags extends Vue {
     }
     this.$emit("update:value", this.selectedTags);
   }
-  createTags() {
-    this.$store.commit("createTags");
-  }
+  // createTags() {
+  //   this.$store.commit("createTags");
+  // }
 }
 </script>
 
@@ -74,7 +75,7 @@ export default class Tags extends Vue {
   }
   > .newAdd {
     padding-top: 16px;
-    > button {
+    > .add {
       background: transparent;
       border: none;
       color: #999;

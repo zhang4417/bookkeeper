@@ -1,5 +1,10 @@
+type Tag = {
+    value: string;
+    name: string;
+}
 type RecordItem = {
-    tags: string[];
+    tags: Tag[];
+    iconName: string;
     notes: string;
     type: string;
     amount: number;
@@ -11,3 +16,4 @@ type tagsListModel = {
     createTags: () => void;
     saveTags: () => void;
 };
+
