@@ -32,7 +32,6 @@ export default class Money extends Vue {
   ];
   record: RecordItem = {
     tags: [],
-    iconName: "",
     notes: "",
     type: "-",
     amount: 0
@@ -44,9 +43,12 @@ export default class Money extends Vue {
     this.record.tags = value;
   }
   saveRecord() {
+    if (this.record.tags.length === 0) {
+      return window.alert("请选择一个标签");
+    }
     this.$store.commit("addRecord", this.record);
-    window.alert("已保存");
     this.record.notes = "";
+    window.alert("已保存");
   }
 }
 </script>
@@ -55,6 +57,7 @@ export default class Money extends Vue {
 .layout-content {
   display: flex;
   flex-direction: column-reverse;
+  background: #fdad35;
 }
 </style>
 <style lang="scss" scoped>

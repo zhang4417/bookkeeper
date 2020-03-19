@@ -32,6 +32,8 @@ export default class Tabs extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/style/helper.scss";
+
 .tabs {
   display: flex;
   background: #c4c4c4;
@@ -49,8 +51,12 @@ export default class Tabs extends Vue {
       position: absolute;
       width: 100%;
       height: 4px;
-      background: black;
+      background: #562512;
       bottom: 0;
+    }
+    &.selected {
+      background: rgb(240, 134, 41);
+      color: white;
     }
   }
 }

@@ -10,7 +10,8 @@
         </h1>
         <ul class="item-wraper" v-for="item in group.items" :key="item.createAt">
           <li class="item">
-            <span class="tags">{{tagsString(item.tags)}}</span>
+            <Icon :name="item.tags[0].name" />
+            <span class="tags">{{item.tags[0].value}}</span>
             <span class="notes">{{item.notes}}</span>
             <span>¥{{item.amount}}</span>
           </li>
@@ -84,7 +85,6 @@ export default class Bill extends Vue {
         const current = newList[i];
         const last = hashTab[hashTab.length - 1];
         if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {
-          console.log("hihi");
           last.total += current.amount;
           last.items.push(current);
         } else {
@@ -95,7 +95,6 @@ export default class Bill extends Vue {
           });
         }
       }
-      console.log("hihihi");
       return hashTab;
     }
   }
@@ -111,7 +110,7 @@ export default class Bill extends Vue {
       return dayjs(item).format("YYYY年M月D日");
     }
   }
-  tagsString(tags: string[]) {
+  tagsString(tags: Tag[]) {
     return tags.length === 0 ? "空" : tags.join("，");
   }
 }
@@ -130,6 +129,12 @@ export default class Bill extends Vue {
 ::v-deep .schedule-tab-item {
   font-size: 18px;
   height: 48px;
+  &.selected {
+    background: #c4c4c4;
+  }
+  &::after {
+    background: #f08629;
+  }
 }
 %item {
   min-height: 48px;

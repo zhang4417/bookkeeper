@@ -4,7 +4,6 @@ type Tag = {
 }
 type RecordItem = {
     tags: Tag[];
-    iconName: string;
     notes: string;
     type: string;
     amount: number;

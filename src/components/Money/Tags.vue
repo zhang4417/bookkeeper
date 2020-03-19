@@ -27,22 +27,23 @@ export default class Tags extends Vue {
   get tagList() {
     return this.$store.state.tags as Tag[];
   }
-  selectedTags = [{ value: "", name: "" }];
+  selectedTags = [] as Tag[];
   created() {
     this.$store.commit("fetchTags");
   }
   toggle(tag: Tag) {
     const index = this.selectedTags.indexOf(tag);
+    if (this.selectedTags.length === 0) {
+      this.selectedTags.push(tag);
+    }
     if (index >= 0) {
       this.selectedTags.splice(index, 1);
     } else {
-      this.selectedTags.push(tag);
+      this.selectedTags.splice(0, 1, tag);
     }
+    console.log(this.selectedTags);
     this.$emit("update:value", this.selectedTags);
   }
-  // createTags() {
-  //   this.$store.commit("createTags");
-  // }
 }
 </script>
 
@@ -69,7 +70,8 @@ export default class Tags extends Vue {
       line-height: $h;
       margin-top: 8px;
       &.selected {
-        background: darken($bg, 50%);
+        background: #ffa714;
+        color: white;
       }
     }
   }

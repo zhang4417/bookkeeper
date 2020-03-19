@@ -1,9 +1,9 @@
 <template>
   <div class="name-wraper">
-    <div class="tagNav">
-      <Icon name="left" @click="back" />
-      <span>新增标签页</span>
-      <Icon name="add" @click="commit" />
+    <div class="navbar">
+      <Icon name="left" class="leftContent" @click="back" />
+      <span class="middleContent">新增标签页</span>
+      <Icon name="add" class="rightContent" @click="commit" />
     </div>
     <Notes
       class="tagInput"
@@ -11,21 +11,19 @@
       :placeholder="'请输入新增标签名'"
       :inputValue.sync="nameRecord.value"
     />
-    {{nameRecord}}
     <div class="iconList">
       <Icon
-        v-for="name in income"
+        v-for="name in layout"
         :key="name"
         @click="toggle(name)"
         :class="{'selected':nameRecord.name===name}"
         class="item"
         :name="name"
       />
-      {{nameRecord.name}}
     </div>
     <div class="iconList down-icon">
       <Icon
-        v-for="name in outlay"
+        v-for="name in income"
         :key="name"
         @click="toggle(name)"
         :class="{'selected':nameRecord.name===name}"
@@ -49,7 +47,7 @@ export default class CreateTag extends Vue {
   get createTagsError() {
     return this.$store.state.createTagsError;
   }
-  income: string[] = [
+  layout: string[] = [
     "yuLe",
     "youXi",
     "yinEr",
@@ -63,9 +61,10 @@ export default class CreateTag extends Vue {
     "gouWu",
     "fangDai",
     "cheDai",
-    "huaZhuang"
+    "huaZhuang",
+    "riYongpin"
   ];
-  outlay: string[] = ["jiangJin", "gongZi", "caiPiao", "others"];
+  income: string[] = ["jiangJin", "gongZi", "caiPiao", "others"];
   nameRecord: { [key: string]: string } = { value: "", name: "" };
   //{value:xx,name:xx}
   toggle(name: string) {
@@ -85,16 +84,27 @@ export default class CreateTag extends Vue {
 
 <style lang="scss" scoped>
 .name-wraper {
-  border: 1px solid red;
-  height: 100vh;
+  min-height: 100vh;
   background: white;
 }
-.tagNav {
-  height: 48px;
+.navbar {
+  background: #f08629;
+  color: white;
+  padding: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: red;
+  > .leftContent {
+    height: 18px;
+    width: 18px;
+  }
+  > .rightContent {
+    height: 20px;
+    width: 20px;
+  }
+  > .middleContent {
+    font-size: 18px;
+  }
 }
 .tagInput {
   margin-top: 24px;
@@ -118,6 +128,6 @@ export default class CreateTag extends Vue {
   box-shadow: 0 -4px 5px -5px rgba(0, 0, 0, 0.2);
 }
 ::v-deep .selected {
-  color: red;
+  color: #f60;
 }
 </style>

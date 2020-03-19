@@ -39,6 +39,7 @@ const store = new Vuex.Store({
     },
     addRecord(state, record: RecordItem) {
       const record2 = JSON.parse(JSON.stringify(record)); //深拷贝record
+
       record2.createAt = new Date().toISOString();
       state.recordList.push(record2);
       store.commit('saveRecord');

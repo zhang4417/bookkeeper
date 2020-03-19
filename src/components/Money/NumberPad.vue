@@ -54,12 +54,15 @@ export default class NumberPad extends Vue {
     this.output = "0";
   }
   ok() {
+    if (this.output === "0") {
+      return window.alert("金额不能为空");
+    }
     if (this.output !== "0") {
       const number = parseFloat(this.output);
       this.$emit("update:value", number);
       this.$emit("saveRecord", number);
+      this.output = "0";
     }
-    this.output = "0";
   }
 }
 </script>
