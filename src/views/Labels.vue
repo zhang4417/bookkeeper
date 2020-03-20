@@ -60,11 +60,12 @@ export default class Labels extends Vue {
     justify-content: space-between;
     align-items: center;
     min-height: 44px;
+    color: #f08629;
     svg {
       width: 18px;
       height: 18px;
       margin-right: 16px;
-      color: #666;
+      color: #f08629;
     }
   }
 }

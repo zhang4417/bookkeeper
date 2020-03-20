@@ -49,7 +49,7 @@ export default class Tags extends Vue {
 
 <style lang="scss" scoped>
 .tags {
-  background: white;
+  background: #f08629;
   font-size: 14px;
   padding: 16px;
   display: flex;
@@ -60,7 +60,7 @@ export default class Tags extends Vue {
     display: flex;
     flex-wrap: wrap;
     > li {
-      $bg: #d9d9d9;
+      $bg: white;
       background: $bg;
       margin-right: 8px;
       padding: 0 10px;
@@ -77,10 +77,11 @@ export default class Tags extends Vue {
   }
   > .newAdd {
     padding-top: 16px;
+
     > .add {
       background: transparent;
       border: none;
-      color: #999;
+      color: rgb(209, 203, 203);
       border-bottom: 1px solid;
       padding: 0 4px;
     }

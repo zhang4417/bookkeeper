@@ -7,6 +7,7 @@ import NotFound from "@/components/NotFound.vue"
 import EditLabel from '@/views/EditLabel.vue';
 import EChart from '@/views/EChart.vue';
 import CreateTag from '@/views/CreateTag.vue'
+import EveryRecord from '@/views/EveryRecord.vue';
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,10 @@ const routes = [
   {
     path: '/bill',
     component: Bill
+  },
+  {
+    path: '/bill/record/:id',
+    component: EveryRecord
   },
   {
     path: '/labels/edit/:id',

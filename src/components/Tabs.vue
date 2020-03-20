@@ -46,16 +46,16 @@ export default class Tabs extends Vue {
     justify-content: center;
     align-items: center;
     position: relative;
-    &.selected::after {
+    &::after {
       content: "";
       position: absolute;
       width: 100%;
       height: 4px;
-      background: #562512;
+      background: #f08629;
       bottom: 0;
     }
     &.selected {
-      background: rgb(240, 134, 41);
+      background: #f08629;
       color: white;
     }
   }

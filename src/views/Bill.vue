@@ -8,14 +8,14 @@
           {{beautiful(group.title)}}
           <span>¥{{group.total}}</span>
         </h1>
-        <ul class="item-wraper" v-for="item in group.items" :key="item.createAt">
-          <li class="item">
+        <div class="item-wraper" v-for="item in group.items" :key="item.createAt">
+          <router-link class="item" :to=" `/bill/record/${item.createAt}`">
             <Icon :name="item.tags[0].name" />
             <span class="tags">{{item.tags[0].value}}</span>
             <span class="notes">{{item.notes}}</span>
             <span>¥{{item.amount}}</span>
-          </li>
-        </ul>
+          </router-link>
+        </div>
       </li>
     </ul>
     <div v-else class="xxx-wraper">
@@ -167,22 +167,22 @@ export default class Bill extends Vue {
 
 <style lang="scss" scoped>
 ::v-deep .type-tab-item {
-  background: white;
+  background: #c4c4c4;
   &.selected {
-    background: #c4c4c4;
+    background: #f08629;
   }
   &::after {
-    display: none;
+    background: #f08629;
   }
 }
 ::v-deep .schedule-tab-item {
   font-size: 18px;
   height: 48px;
   &.selected {
-    background: #c4c4c4;
+    background: #f08629;
   }
   &::after {
-    background: #f08629;
+    display: none;
   }
 }
 %item {
