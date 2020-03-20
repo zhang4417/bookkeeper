@@ -70,12 +70,11 @@ export default class Bill extends Vue {
     if (newList.length === 0) {
       return [];
     } else {
-      const titleTime = dayjs(newList[0].createAt).format("YYYY-MM-DD");
+      const timeByday = dayjs(newList[0].createAt).format("YYYY-MM-DD");
       // let allAmount = newList.reduce((sum, item) => sum + item.amount, 0);
-
       const hashTab: HashItem[] = [
         {
-          title: titleTime,
+          title: timeByday,
           total: newList[0].amount,
           items: [newList[0]]
         }
@@ -84,15 +83,41 @@ export default class Bill extends Vue {
       for (let i = 1; i < newList.length; i++) {
         const current = newList[i];
         const last = hashTab[hashTab.length - 1];
-        if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {
-          last.total += current.amount;
-          last.items.push(current);
-        } else {
-          hashTab.push({
-            title: dayjs(newList[i].createAt).format("YYYY-MM-DD"),
-            total: current.amount,
-            items: [current]
-          });
+        if (this.schedule === "day") {
+          if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {
+            last.total += current.amount;
+            last.items.push(current);
+          } else {
+            hashTab.push({
+              title: dayjs(newList[i].createAt).format("YYYY-MM-DD"),
+              total: current.amount,
+              items: [current]
+            });
+          }
+        }
+        if (this.schedule === "week") {
+          if (dayjs(current.createAt).isSame(dayjs(last.title), "week")) {
+            last.total += current.amount;
+            last.items.push(current);
+          } else {
+            hashTab.push({
+              title: dayjs(newList[i].createAt).format("YYYY-MM-DD"),
+              total: current.amount,
+              items: [current]
+            });
+          }
+        }
+        if (this.schedule === "month") {
+          if (dayjs(current.createAt).isSame(dayjs(last.title), "month")) {
+            last.total += current.amount;
+            last.items.push(current);
+          } else {
+            hashTab.push({
+              title: dayjs(newList[i].createAt).format("YYYY-MM-DD"),
+              total: current.amount,
+              items: [current]
+            });
+          }
         }
       }
       return hashTab;
@@ -100,14 +125,38 @@ export default class Bill extends Vue {
   }
   beautiful(item: string) {
     const now = dayjs();
-    if (dayjs(item).isSame(now, "day")) {
-      return "今天";
-    } else if (dayjs(item).isSame(now.subtract(1, "day"), "day")) {
-      return "昨天";
-    } else if (dayjs(item).isSame(now.subtract(2, "day"), "day")) {
-      return "前天";
-    } else {
-      return dayjs(item).format("YYYY年M月D日");
+    if (this.schedule === "day") {
+      if (dayjs(item).isSame(now, "day")) {
+        return "今天";
+      } else if (dayjs(item).isSame(now.subtract(1, "day"), "day")) {
+        return "昨天";
+      } else if (dayjs(item).isSame(now.subtract(2, "day"), "day")) {
+        return "前天";
+      } else {
+        return dayjs(item).format("YYYY年M月D日");
+      }
+    }
+    if (this.schedule === "week") {
+      if (dayjs(item).isSame(now, "week")) {
+        return "本周";
+      } else if (dayjs(item).isSame(now.subtract(1, "week"), "week")) {
+        return "上周";
+      } else if (dayjs(item).isSame(now.subtract(2, "week"), "week")) {
+        return "上上周";
+      } else {
+        return dayjs(item).format("YYYY年M月D日");
+      }
+    }
+    if (this.schedule === "month") {
+      if (dayjs(item).isSame(now, "month")) {
+        return "本月";
+      } else if (dayjs(item).isSame(now.subtract(1, "month"), "month")) {
+        return "上月";
+      } else if (dayjs(item).isSame(now.subtract(2, "month"), "month")) {
+        return "上上月";
+      } else {
+        return dayjs(item).format("YYYY年M月");
+      }
     }
   }
   tagsString(tags: Tag[]) {
