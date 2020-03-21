@@ -167,12 +167,12 @@ export default class Bill extends Vue {
 
 <style lang="scss" scoped>
 ::v-deep .type-tab-item {
-  background: #c4c4c4;
+  background: #e6cf83;
   &.selected {
     background: #f0c229;
   }
   &::after {
-    background: #f0c229;
+    display: none;
   }
 }
 ::v-deep .schedule-tab-item {

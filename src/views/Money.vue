@@ -2,7 +2,7 @@
   <div>
     <Layout prefix="layout">
       <NumberPad :value.sync="record.amount" @saveRecord="saveRecord()" />
-      <Tabs :dataSource="typeList" :value.sync="record.type" />
+      <Tabs :dataSource="typeList" :value.sync="record.type" classPrefix="type" />
       <Notes fileName="备注" placeholder="请在这里输入备注" :inputValue.sync="record.notes" />
       <Tags @update:value="onchangeTags" />
     </Layout>
@@ -61,4 +61,7 @@ export default class Money extends Vue {
 }
 </style>
 <style lang="scss" scoped>
+::v-deep .type-tab-item::after {
+  display: none;
+}
 </style>
