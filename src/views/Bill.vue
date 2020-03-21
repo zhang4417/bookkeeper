@@ -169,17 +169,17 @@ export default class Bill extends Vue {
 ::v-deep .type-tab-item {
   background: #c4c4c4;
   &.selected {
-    background: #f08629;
+    background: #f0c229;
   }
   &::after {
-    background: #f08629;
+    background: #f0c229;
   }
 }
 ::v-deep .schedule-tab-item {
   font-size: 18px;
   height: 48px;
   &.selected {
-    background: #f08629;
+    background: #f0c229;
   }
   &::after {
     display: none;

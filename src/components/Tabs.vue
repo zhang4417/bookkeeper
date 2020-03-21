@@ -51,11 +51,11 @@ export default class Tabs extends Vue {
       position: absolute;
       width: 100%;
       height: 4px;
-      background: #f08629;
+      background: #f0c229;
       bottom: 0;
     }
     &.selected {
-      background: #f08629;
+      background: #f0c229;
       color: white;
     }
   }
