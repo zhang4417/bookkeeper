@@ -38,7 +38,7 @@ export default class Notes extends Vue {
   }
   input {
     background: transparent;
-    height: 64px;
+    height: 58px;
     flex-grow: 1;
     border: none;
   }

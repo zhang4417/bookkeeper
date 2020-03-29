@@ -5,7 +5,7 @@ import Money from "@/views/Money.vue"
 import Bill from "@/views/Bill.vue"
 import NotFound from "@/components/NotFound.vue"
 import EditLabel from '@/views/EditLabel.vue';
-import EChart from '@/views/EChart.vue';
+import Statistics from '@/views/Statistics.vue';
 import CreateTag from '@/views/CreateTag.vue'
 import EveryRecord from '@/views/EveryRecord.vue';
 
@@ -39,10 +39,6 @@ const routes = [
   {
     path: '/create',
     component: CreateTag
-  },
-  {
-    path: '/chart',
-    component: EChart
   },
   {
     path: '*',

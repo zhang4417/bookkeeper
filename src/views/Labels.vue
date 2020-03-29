@@ -18,7 +18,7 @@
       </div>
       <div class="newTags">
         <router-link to="/create">
-          <Button @click="createTags()">新增标签</Button>
+          <Button @click="createTags()" class="newButton">新增标签</Button>
         </router-link>
       </div>
     </Layout>

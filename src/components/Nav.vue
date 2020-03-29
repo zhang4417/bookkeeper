@@ -12,17 +12,13 @@
       <Icon name="bill" />
       <span>账单</span>
     </router-link>
-    <router-link to="/chart" class="item" active-class="selected">
-      <Icon name="overview" />
-      <span>统计</span>
-    </router-link>
   </nav>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 
-export default Vue.extend({});
+export default {};
 </script>
 
 <style lang="scss" scoped>

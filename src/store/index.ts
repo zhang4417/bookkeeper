@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    tags: [{ value: "娱乐", name: "yuLe" }, { value: "购物", name: "gouWu" }, { value: "交通", name: "jiaoTong" }, { value: "生活", name: "riYongPin" }] as Tag[],
+    tags: [{ value: "娱乐", name: "yuLe" }, { value: "购物", name: "gouWu" }, { value: "交通", name: "jiaoTong" }, { value: "生活", name: "riYongPin" }, { value: "聚会", name: "juHui" }, { value: "旅行", name: "lvXing" }] as Tag[],
     recordList: [] as RecordItem[]
   },
   mutations: {
