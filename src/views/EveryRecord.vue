@@ -9,6 +9,7 @@
       </div>
       <span class="rightContent">历史记录</span>
     </div>
+
     <ul class="notes-wraper">
       <li class="item">
         <span class="type">标签</span>
@@ -22,7 +23,12 @@
         <span class="type">日期</span>
         <span class="value">{{currentRecord.dateTime}}</span>
       </li>
-      <Notes class="tagInput" :fileName="'备注'" :inputValue.sync="currentRecord.note" />
+      <Notes
+        class="tagInput"
+        :fileName="'备注'"
+        :placeholder="'请在这里修改备注'"
+        :inputValue.sync="currentRecord.note"
+      />
     </ul>
 
     <div class="button-wraper">
@@ -99,6 +105,10 @@ export default class EveryRecord extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.name-wraper {
+  background: #f5f5f5;
+  min-height: 100vh;
+}
 .navbar {
   background: #f08629;
   padding: 8px 16px;
@@ -139,7 +149,6 @@ export default class EveryRecord extends Vue {
   justify-content: center;
   align-items: center;
   padding: 48px 16px;
-  background: white;
 }
 .notes-wraper {
   > .item {

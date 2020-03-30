@@ -1,28 +1,27 @@
 <template>
-  <div>
-    <Layout class="layout-wraper">
-      <div class="tags">
-        <router-link
-          class="tag"
-          v-for="tag in tags"
-          :key="tag.value"
-          :to="`/labels/edit/${tag.value}`"
-        >
-          <span>
-            <Icon :name="tag.name" />
-            {{tag.value}}
-          </span>
+  <Layout class="layout-wraper">
+    <div class="top-border"></div>
+    <div class="tags">
+      <router-link
+        class="tag"
+        v-for="tag in tags"
+        :key="tag.value"
+        :to="`/labels/edit/${tag.value}`"
+      >
+        <span>
+          <Icon :name="tag.name" />
+          {{tag.value}}
+        </span>
 
-          <Icon name="right" />
-        </router-link>
-      </div>
-      <div class="newTags">
-        <router-link to="/create">
-          <Button @click="createTags()" class="newButton">新增标签</Button>
-        </router-link>
-      </div>
-    </Layout>
-  </div>
+        <Icon name="right" />
+      </router-link>
+    </div>
+    <div class="newTags">
+      <router-link to="/create">
+        <Button @click="createTags()" class="newButton">新增标签</Button>
+      </router-link>
+    </div>
+  </Layout>
 </template>
 
 <script lang="ts">
@@ -49,10 +48,15 @@ export default class Labels extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.top-border {
+  height: 10px;
+  background: #f08629;
+}
 .layout-wraper {
-  background: white;
+  background: #f5f5f5;
 }
 .tags {
+  background: white;
   padding-left: 16px;
   .tag {
     border-bottom: 1px solid #e6e6e6;

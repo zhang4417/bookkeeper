@@ -23,11 +23,11 @@ const store = new Vuex.Store({
       }
       const tagsValue = state.tags.map(item => item.value)
       if (tagsValue.indexOf(record.value!) >= 0) {
-        return window.alert('Duplicated')
+        return window.alert('标签名重复')
       }
       state.tags.push(record!)
       store.commit('saveTags')
-      window.alert('Success')
+      window.alert('添加成功')
     },
     saveTags(state) {
       window.localStorage.setItem('tagsList', JSON.stringify(state.tags))
