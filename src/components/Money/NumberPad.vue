@@ -27,21 +27,22 @@ import { Component, Prop } from "vue-property-decorator";
 @Component
 export default class NumberPad extends Vue {
   @Prop(Number) readonly value!: number;
+  @Prop(Boolean) success!: boolean;
   output = this.value.toString();
   inputContent(event: MouseEvent) {
     const button = event.target as HTMLButtonElement;
-    const input = button.textContent!;
+    const inputValue = button.textContent!;
     if (this.output.length === 16) {
       return;
     }
-    if (this.output === "0" && "1234567890".indexOf(input) >= 0) {
-      this.output = input;
+    if (this.output === "0" && "1234567890".indexOf(inputValue) >= 0) {
+      this.output = inputValue;
       return;
     }
-    if (this.output.indexOf(".") >= 0 && input === ".") {
+    if (this.output.indexOf(".") >= 0 && inputValue === ".") {
       return;
     }
-    this.output += input;
+    this.output += inputValue;
   }
   remove() {
     if (this.output.length === 1) {
@@ -61,7 +62,11 @@ export default class NumberPad extends Vue {
       const number = parseFloat(this.output);
       this.$emit("update:value", number);
       this.$emit("saveRecord", number);
-      this.output = "0";
+      this.$nextTick(() => {
+        if (this.success === true) {
+          return (this.output = "0");
+        }
+      });
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout prefix="layout">
-      <NumberPad :value.sync="record.amount" @saveRecord="saveRecord()" />
+      <NumberPad :value.sync="record.amount" @saveRecord="saveRecord()" :success.sync="success" />
       <Tabs :dataSource="typeList" :value.sync="record.type" classPrefix="type" />
       <Notes fileName="备注" placeholder="请在这里输入备注" :inputValue.sync="record.notes" />
       <Notes fileName="日期" inputType="date" :inputValue.sync="record.createAt" />
@@ -28,6 +28,7 @@ import dayjs from "dayjs";
   }
 })
 export default class Money extends Vue {
+  success = true;
   typeList = [
     { value: "-", text: "支出" },
     { value: "+", text: "收入" }
@@ -50,8 +51,10 @@ export default class Money extends Vue {
   }
   saveRecord() {
     if (this.record.tags.length === 0) {
+      this.success = false;
       return window.alert("请选择一个标签");
     }
+    this.success = true;
     this.$store.commit("addRecord", this.record);
     this.record.notes = "";
     window.alert("已保存");

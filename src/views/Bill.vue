@@ -31,7 +31,6 @@ import { Component } from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
-import Icon from "@/components/Icon.vue";
 
 type HashItem = {
   title: string;
@@ -66,7 +65,6 @@ export default class Bill extends Vue {
       .sort(
         (a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf()
       );
-    //
     if (newList.length === 0) {
       return [];
     } else {
@@ -79,7 +77,6 @@ export default class Bill extends Vue {
           items: [newList[0]]
         }
       ];
-
       for (let i = 1; i < newList.length; i++) {
         const current = newList[i];
         const last = hashTab[hashTab.length - 1];
