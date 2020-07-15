@@ -4,6 +4,7 @@
       <NumberPad :value.sync="record.amount" @saveRecord="saveRecord()" />
       <Tabs :dataSource="typeList" :value.sync="record.type" classPrefix="type" />
       <Notes fileName="备注" placeholder="请在这里输入备注" :inputValue.sync="record.notes" />
+      <Notes fileName="日期" inputType="date" :inputValue.sync="record.createAt" />
       <Tags @update:value="onchangeTags" />
     </Layout>
   </div>
@@ -16,6 +17,7 @@ import Tabs from "@/components/Tabs.vue";
 import Notes from "@/components/Notes.vue";
 import Tags from "@/components/Money/Tags.vue";
 import { Component } from "vue-property-decorator";
+import dayjs from "dayjs";
 
 @Component({
   components: { Tags, Notes, Tabs, NumberPad },
@@ -34,8 +36,12 @@ export default class Money extends Vue {
     tags: [],
     notes: "",
     type: "-",
-    amount: 0
+    amount: 0,
+    createAt: dayjs().format("YYYY-MM-DD")
   };
+  mounted() {
+    console.log(this.record.createAt);
+  }
   created() {
     this.$store.commit("fetchRecord");
   }

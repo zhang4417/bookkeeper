@@ -2,7 +2,7 @@
   <label class="notes">
     <span>{{fileName}}</span>
     <input
-      type="text"
+      :type="inputType || 'text'"
       :value="inputValue"
       @input="onInuptValueChanged($event.target.value)"
       :placeholder="placeholder"
@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Watch, Prop } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class Notes extends Vue {
   @Prop({ type: String, default: "" }) inputValue!: string;
   @Prop({ required: true }) fileName!: string;
   @Prop() placeholder?: string;
-
+  @Prop() inputType?: string;
   onInuptValueChanged(value: string) {
     this.$emit("update:inputValue", value);
   }
