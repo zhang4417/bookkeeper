@@ -13,9 +13,9 @@
           <router-link class="item" :to=" `/bill/record/${item.id}`">
             <Icon :name="item.tags[0].name" />
             <span class="tags">{{item.tags[0].value}}</span>
-            <span class="notes">{{item.notes}}</span>
-            <span v-if="item.type==='-'">-¥{{item.amount}}</span>
-            <span v-else>¥{{item.amount}}</span>
+            <sapn class="notes">{{item.notes}}</sapn>
+            <span class="amount" v-if="item.type==='-'">-¥{{item.amount}}</span>
+            <span class="amount" v-else>¥{{item.amount}}</span>
           </router-link>
         </div>
       </li>
@@ -197,9 +197,11 @@ export default class Bill extends Vue {
   .notes {
     margin-right: auto;
     margin-left: 8px;
+    width: 50%;
+    word-wrap: break-word;
   }
   .tags {
-    width: 20%;
+    width: 25%;
   }
 }
 .title {

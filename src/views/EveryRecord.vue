@@ -42,7 +42,6 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Notes from "@/components/Notes.vue";
-import dayjs from "dayjs";
 import clone from "@/lib/clone";
 import Button from "@/components/Button.vue";
 import Icon from "@/components/Icon.vue";

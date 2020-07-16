@@ -3,7 +3,7 @@
     <Layout prefix="layout">
       <NumberPad :value.sync="record.amount" @saveRecord="saveRecord()" :success.sync="success" />
       <Tabs :dataSource="typeList" :value.sync="record.type" classPrefix="type" />
-      <Notes fileName="备注" placeholder="请在这里输入备注" :inputValue.sync="record.notes" />
+      <Notes fileName="备注" maxlength="20" placeholder="请在这里输入备注，20字符以内" :inputValue.sync="record.notes" />
       <Notes fileName="日期" inputType="date" :inputValue.sync="record.createAt" />
       <Tags @update:value="onchangeTags" />
     </Layout>

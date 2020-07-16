@@ -6,6 +6,7 @@
       :value="inputValue"
       @input="onInuptValueChanged($event.target.value)"
       :placeholder="placeholder"
+      :maxlength="maxlength"
     />
   </label>
 </template>
@@ -20,6 +21,7 @@ export default class Notes extends Vue {
   @Prop({ required: true }) fileName!: string;
   @Prop() placeholder?: string;
   @Prop() inputType?: string;
+  @Prop() maxlength?: string;
   onInuptValueChanged(value: string) {
     this.$emit("update:inputValue", value);
   }

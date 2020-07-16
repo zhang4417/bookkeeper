@@ -8,7 +8,8 @@
     <Notes
       class="tagInput"
       :fileName="'标签'"
-      :placeholder="'请输入新增标签名'"
+      maxlength="5"
+      :placeholder="'请输入新增标签名，5个字符以内'"
       :inputValue.sync="nameRecord.value"
     />
     <div class="iconList">

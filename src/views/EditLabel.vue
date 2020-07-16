@@ -5,7 +5,7 @@
       <span class="middleContent">编辑标签</span>
       <span class="rightContent"></span>
     </div>
-    <Notes class="notes" :inputValue.sync="tag" fileName="标签" placeholder="请输入标签名" />
+    <Notes class="notes" :inputValue.sync="tag" fileName="标签" maxlength="5" placeholder="请输入标签名" />
     <div class="button-wraper">
       <Button @click="remove">删除标签</Button>
     </div>
