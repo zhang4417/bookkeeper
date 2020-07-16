@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import idCreator from '@/lib/identify.ts'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    tags: [{ value: "娱乐", name: "yuLe" }, { value: "购物", name: "gouWu" }, { value: "交通", name: "jiaoTong" }, { value: "生活", name: "riYongPin" }, { value: "聚会", name: "juHui" }, { value: "旅行", name: "lvXing" }] as Tag[],
+    tags: [{ value: "娱乐", name: "yuLe" }, { value: "购物", name: "gouWu" }, { value: "交通", name: "jiaoTong" }, { value: "生活", name: "shengHuo" }, { value: "聚会", name: "juHui" }, { value: "旅行", name: "lvXing" }] as Tag[],
     recordList: [] as RecordItem[]
   },
   mutations: {
@@ -21,13 +22,13 @@ const store = new Vuex.Store({
       if (record.value === '') {
         return window.alert('标签名不能为空')
       }
+      store.commit('fetchTags')  //获取最新的tags
       const tagsValue = state.tags.map(item => item.value)
-      if (tagsValue.indexOf(record.value!) >= 0) {
-        return window.alert('标签名重复')
-      }
-      state.tags.push(record!)
-      store.commit('saveTags')
-      window.alert('添加成功')
+      if (tagsValue.indexOf(record.value!) < 0) {
+        state.tags.push(record!)
+        store.commit('saveTags')
+        window.alert('添加成功')
+      } else { window.alert('标签名重复') }
     },
     saveTags(state) {
       window.localStorage.setItem('tagsList', JSON.stringify(state.tags))
@@ -39,8 +40,8 @@ const store = new Vuex.Store({
     },
     addRecord(state, record: RecordItem) {
       const record2 = JSON.parse(JSON.stringify(record)); //深拷贝record
-
-      record2.createAt = record2.createAt || new Date().toISOString();
+      record2.id = idCreator()
+      //record2.createAt = record2.createAt || new Date().toISOString();
       state.recordList.push(record2);
       store.commit('saveRecord');
     },

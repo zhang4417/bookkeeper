@@ -65,17 +65,18 @@ export default class EveryRecord extends Vue {
   get recordList() {
     return this.$store.state.recordList as RecordItem[];
   }
-  get createTime() {
-    return this.recordList.map((item: RecordItem) => item.createAt);
+  get recordIdList() {
+    return this.recordList.map((item: RecordItem) => item.id);
   }
   created() {
-    const id = this.$route.params.id;
-    if (this.createTime.indexOf(id) >= 0) {
+    const paramsId = parseInt(this.$route.params.id);
+    if (this.recordIdList.indexOf(paramsId) >= 0) {
       const index = clone(this.recordList)
-        .map(item => item.createAt)
-        .indexOf(id);
+        .map(item => item.id)
+        .indexOf(paramsId);
       this.currentRecord.tag = this.recordList[index].tags[0].value;
-      this.currentRecord.dateTime = dayjs(id).format("YYYY年MM月DD日");
+      this.currentRecord.dateTime = this.recordList[index].createAt;
+
       this.currentRecord.amount = this.recordList[index].amount;
       this.currentRecord.note = this.recordList[index].notes;
       this.currentRecord.iconName = this.recordList[index].tags[0].name;
@@ -84,19 +85,19 @@ export default class EveryRecord extends Vue {
     }
   }
   back() {
-    const id = this.$route.params.id;
+    const paramsId = parseInt(this.$route.params.id);
     const index = clone(this.recordList)
-      .map(item => item.createAt)
-      .indexOf(id);
+      .map(item => item.id)
+      .indexOf(paramsId);
     this.recordList[index].notes = this.currentRecord.note;
     this.$store.commit("saveRecord");
     this.$router.back();
   }
   removeRecord() {
-    const id = this.$route.params.id;
+    const paramsId = parseInt(this.$route.params.id);
     const index = clone(this.recordList)
-      .map(item => item.createAt)
-      .indexOf(id);
+      .map(item => item.id)
+      .indexOf(paramsId);
     this.recordList.splice(index, 1);
     this.$store.commit("saveRecord");
     this.$router.back();

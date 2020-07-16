@@ -40,9 +40,6 @@ export default class Money extends Vue {
     amount: 0,
     createAt: dayjs().format("YYYY-MM-DD")
   };
-  mounted() {
-    console.log(this.record.createAt);
-  }
   created() {
     this.$store.commit("fetchRecord");
   }

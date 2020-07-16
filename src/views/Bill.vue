@@ -6,14 +6,16 @@
       <li class="group" v-for="group in groupList" :key="group.title">
         <h1 class="title">
           {{beautiful(group.title)}}
-          <span>¥{{group.total}}</span>
+          <span v-if="group.items[0].type==='-'">-¥{{group.total}}</span>
+          <span v-else>¥{{group.total}}</span>
         </h1>
-        <div class="item-wraper" v-for="item in group.items" :key="item.createAt">
-          <router-link class="item" :to=" `/bill/record/${item.createAt}`">
+        <div class="item-wraper" v-for="item in group.items" :key="item.id">
+          <router-link class="item" :to=" `/bill/record/${item.id}`">
             <Icon :name="item.tags[0].name" />
             <span class="tags">{{item.tags[0].value}}</span>
             <span class="notes">{{item.notes}}</span>
-            <span>¥{{item.amount}}</span>
+            <span v-if="item.type==='-'">-¥{{item.amount}}</span>
+            <span v-else>¥{{item.amount}}</span>
           </router-link>
         </div>
       </li>
@@ -60,25 +62,24 @@ export default class Bill extends Vue {
   }
 
   get groupList() {
-    const newList = clone(this.recordList)
+    const sameTypeRecord = clone(this.recordList)
       .filter(item => item.type === this.type)
       .sort(
         (a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf()
       );
-    if (newList.length === 0) {
+    if (sameTypeRecord.length === 0) {
       return [];
     } else {
-      const timeByday = dayjs(newList[0].createAt).format("YYYY-MM-DD");
-      // let allAmount = newList.reduce((sum, item) => sum + item.amount, 0);
+      // let allAmount = sameTypeRecord.reduce((sum, item) => sum + item.amount, 0);
       const hashTab: HashItem[] = [
         {
-          title: timeByday,
-          total: newList[0].amount,
-          items: [newList[0]]
+          title: sameTypeRecord[0].createAt,
+          total: sameTypeRecord[0].amount,
+          items: [sameTypeRecord[0]]
         }
       ];
-      for (let i = 1; i < newList.length; i++) {
-        const current = newList[i];
+      for (let i = 1; i < sameTypeRecord.length; i++) {
+        const current = sameTypeRecord[i];
         const last = hashTab[hashTab.length - 1];
         if (this.schedule === "day") {
           if (dayjs(current.createAt).isSame(dayjs(last.title), "day")) {
@@ -86,7 +87,7 @@ export default class Bill extends Vue {
             last.items.push(current);
           } else {
             hashTab.push({
-              title: dayjs(newList[i].createAt).format("YYYY-MM-DD"),
+              title: current.createAt,
               total: current.amount,
               items: [current]
             });
@@ -98,7 +99,7 @@ export default class Bill extends Vue {
             last.items.push(current);
           } else {
             hashTab.push({
-              title: dayjs(newList[i].createAt).format("YYYY-MM-DD"),
+              title: current.createAt,
               total: current.amount,
               items: [current]
             });
@@ -110,7 +111,7 @@ export default class Bill extends Vue {
             last.items.push(current);
           } else {
             hashTab.push({
-              title: dayjs(newList[i].createAt).format("YYYY-MM-DD"),
+              title: current.createAt,
               total: current.amount,
               items: [current]
             });
@@ -141,7 +142,7 @@ export default class Bill extends Vue {
       } else if (dayjs(item).isSame(now.subtract(2, "week"), "week")) {
         return "上上周";
       } else {
-        return dayjs(item).format("YYYY年M月D日");
+        return dayjs(item).format("YYYY年M月D日") + "一周";
       }
     }
     if (this.schedule === "month") {

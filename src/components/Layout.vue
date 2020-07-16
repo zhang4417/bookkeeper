@@ -20,7 +20,7 @@ export default Vue.extend({
 .page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 .content {
   flex-grow: 1;

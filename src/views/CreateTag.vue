@@ -40,7 +40,6 @@ import Vue from "vue";
 import Notes from "@/components/Notes.vue";
 import Icon from "@/components/Icon.vue";
 import { Component } from "vue-property-decorator";
-import Nav from "@/components/Nav.vue";
 
 @Component({ components: { Notes, Icon } })
 export default class CreateTag extends Vue {
@@ -62,7 +61,7 @@ export default class CreateTag extends Vue {
     "fangDai",
     "cheDai",
     "huaZhuang",
-    "riYongpin"
+    "shengHuo"
   ];
   income: string[] = ["jiangJin", "gongZi", "caiPiao", "others"];
   nameRecord: { [key: string]: string } = { value: "", name: "" };
