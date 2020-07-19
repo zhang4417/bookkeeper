@@ -1,7 +1,8 @@
 function creatId() {
-    let id = 0
+    let id: number = JSON.parse(localStorage.getItem('_MaxId') || '0')
     return () => {
         id += 1
+        localStorage.setItem('_MaxId', JSON.stringify(id))
         return id
     }
 }

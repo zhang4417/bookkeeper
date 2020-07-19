@@ -2,6 +2,7 @@
   <Layout>
     <Tabs :data-source="typeList" :value.sync=" type " classPrefix="type" />
     <Tabs :data-source="scheduleList" :value.sync=" schedule " classPrefix="schedule" />
+    <EChart :options="polar" />
     <ul v-if="groupList.length>0" class="group-wraper">
       <li class="group" v-for="group in groupList" :key="group.title">
         <h1 class="title">
@@ -13,13 +14,14 @@
           <router-link class="item" :to=" `/bill/record/${item.id}`">
             <Icon :name="item.tags[0].name" />
             <span class="tags">{{item.tags[0].value}}</span>
-            <sapn class="notes">{{item.notes}}</sapn>
+            <span class="notes">{{item.notes}}</span>
             <span class="amount" v-if="item.type==='-'">-¥{{item.amount}}</span>
             <span class="amount" v-else>¥{{item.amount}}</span>
           </router-link>
         </div>
       </li>
     </ul>
+
     <div v-else class="xxx-wraper">
       <Icon name="null" class="xxx" />
       <span class="message">你还没添加任何记录</span>
@@ -33,6 +35,7 @@ import { Component } from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
+import EChart from "@/components/Chart.vue";
 
 type HashItem = {
   title: string;
@@ -40,7 +43,7 @@ type HashItem = {
   items: RecordItem[];
 };
 @Component({
-  components: { Tabs }
+  components: { Tabs, EChart }
 })
 export default class Bill extends Vue {
   type = "-";
@@ -55,8 +58,33 @@ export default class Bill extends Vue {
     { value: "month", text: "按月" }
   ];
   created() {
+    console.log(this);
     this.$store.commit("fetchRecord");
   }
+
+  get polar() {
+    return {
+      title: {
+        text: "ECharts 入门示例"
+      },
+      tooltip: {},
+      legend: {
+        data: ["销量"]
+      },
+      xAxis: {
+        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+      },
+      yAxis: {},
+      series: [
+        {
+          name: "销量",
+          type: "bar",
+          data: [5, 20, 36, 10, 10, 20]
+        }
+      ]
+    };
+  }
+
   get recordList() {
     return this.$store.state.recordList as RecordItem[];
   }
