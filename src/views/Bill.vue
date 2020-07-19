@@ -2,7 +2,7 @@
   <Layout>
     <Tabs :data-source="typeList" :value.sync=" type " classPrefix="type" />
     <Tabs :data-source="scheduleList" :value.sync=" schedule " classPrefix="schedule" />
-    <EChart :options="polar" />
+    <Chart :options="polar" />
     <ul v-if="groupList.length>0" class="group-wraper">
       <li class="group" v-for="group in groupList" :key="group.title">
         <h1 class="title">
@@ -35,7 +35,7 @@ import { Component } from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
-import EChart from "@/components/Chart.vue";
+import Chart from "@/components/Chart.vue";
 
 type HashItem = {
   title: string;
@@ -43,7 +43,7 @@ type HashItem = {
   items: RecordItem[];
 };
 @Component({
-  components: { Tabs, EChart }
+  components: { Tabs, Chart }
 })
 export default class Bill extends Vue {
   type = "-";
@@ -58,7 +58,6 @@ export default class Bill extends Vue {
     { value: "month", text: "按月" }
   ];
   created() {
-    console.log(this);
     this.$store.commit("fetchRecord");
   }
 
