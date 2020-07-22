@@ -2,7 +2,9 @@
   <Layout>
     <Tabs :data-source="typeList" :value.sync=" type " classPrefix="type" />
     <Tabs :data-source="scheduleList" :value.sync=" schedule " classPrefix="schedule" />
-    <Chart :options="polar" />
+    <div class="chart-wrapper" ref="chartWrapper">
+      <Chart class="chart" :options="polar" />
+    </div>
     <ul v-if="groupList.length>0" class="group-wraper">
       <li class="group" v-for="group in groupList" :key="group.title">
         <h1 class="title">
@@ -22,8 +24,8 @@
       </li>
     </ul>
 
-    <div v-else class="xxx-wraper">
-      <Icon name="null" class="xxx" />
+    <div v-else class="null-wraper">
+      <Icon name="null" class="null" />
       <span class="message">你还没添加任何记录</span>
     </div>
   </Layout>
@@ -60,25 +62,32 @@ export default class Bill extends Vue {
   created() {
     this.$store.commit("fetchRecord");
   }
-
+  mounted() {
+    const chartWrapper = this.$refs.chartWrapper as HTMLDivElement;
+    chartWrapper.scrollLeft = chartWrapper.scrollWidth;
+  }
   get polar() {
     return {
       title: {
         text: "ECharts 入门示例"
       },
       tooltip: {},
+      grid: {
+        left: 0,
+        right: 0
+      },
       legend: {
         data: ["销量"]
       },
       xAxis: {
-        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子", "dags"]
       },
-      yAxis: {},
+      yAxis: { axisLine: { show: false } },
       series: [
         {
           name: "销量",
           type: "bar",
-          data: [5, 20, 36, 10, 10, 20]
+          data: [5, 20, 36, 10, 10, 20, 34]
         }
       ]
     };
@@ -235,7 +244,7 @@ export default class Bill extends Vue {
   @extend %item;
   font-size: 18px;
 }
-.xxx-wraper {
+.null-wraper {
   max-height: 200px;
   max-width: 200px;
   padding: 16px;
@@ -244,7 +253,7 @@ export default class Bill extends Vue {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  .xxx {
+  .null {
     &.icon {
       min-width: 100px;
       min-height: 100px;
@@ -254,6 +263,12 @@ export default class Bill extends Vue {
     font-size: 16px;
     padding-top: 16px;
     color: #c4c4c4;
+  }
+}
+.chart {
+  width: 500vw;
+  &-wrapper {
+    overflow: auto;
   }
 }
 </style>
