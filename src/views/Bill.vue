@@ -67,6 +67,27 @@ export default class Bill extends Vue {
     chartWrapper.scrollLeft = chartWrapper.scrollWidth;
   }
   get polar() {
+    const array = []; //[{date:7.3,amount:100}]
+    const sameTypeRecord = clone(this.recordList).filter(
+      item => item.type === this.type
+    );
+    for (let i = 0; i < 29; i++) {
+      const createAt = dayjs()
+        .subtract(i, "day")
+        .format("YYYY-MM-DD");
+      const amount = sameTypeRecord
+        .filter(r => r.createAt === createAt)
+        .reduce((sum, r) => {
+          return sum + r.amount;
+        }, 0);
+      array.push({ date: createAt, amount: amount });
+    }
+
+    const arrayRange = array.sort(
+      (a, b) => dayjs(a.date).valueOf() - dayjs(b.date).valueOf()
+    );
+    const keys = arrayRange.map(d => d.date);
+    const values = arrayRange.map(a => a.amount);
     return {
       title: {
         text: "ECharts 入门示例"
@@ -80,14 +101,14 @@ export default class Bill extends Vue {
         data: ["销量"]
       },
       xAxis: {
-        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子", "dags"]
+        data: keys
       },
       yAxis: { axisLine: { show: false } },
       series: [
         {
           name: "销量",
           type: "bar",
-          data: [5, 20, 36, 10, 10, 20, 34]
+          data: values
         }
       ]
     };
