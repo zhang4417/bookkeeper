@@ -49,7 +49,7 @@ export default class Labels extends Vue {
 
 <style lang="scss" scoped>
 .top-border {
-  height: 10px;
+  height: 1px;
   background: #f08629;
 }
 .layout-wraper {

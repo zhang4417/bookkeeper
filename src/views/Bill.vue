@@ -288,7 +288,7 @@ export default class Bill extends Vue {
   max-height: 200px;
   max-width: 200px;
   padding: 16px;
-  margin: 100px auto;
+  margin: 0px auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
