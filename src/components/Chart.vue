@@ -4,18 +4,23 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Prop, Component } from "vue-property-decorator";
-import echarts, { EChartOption } from "echarts";
+import { Prop, Component, Watch } from "vue-property-decorator";
+import echarts, { EChartOption, ECharts } from "echarts";
 
 @Component
 export default class EChart extends Vue {
+  myChart?: ECharts;
   @Prop() options?: EChartOption;
+  @Watch("options")
+  onOptionsChanged(newVal: EChartOption) {
+    this.myChart!.setOption(newVal);
+  }
   mounted() {
     if (this.options === undefined) {
       return console.error("option 为空");
     } else {
-      const myChart = echarts.init(this.$refs.wrapper as HTMLDivElement);
-      myChart.setOption(this.options);
+      this.myChart = echarts.init(this.$refs.wrapper as HTMLDivElement);
+      this.myChart.setOption(this.options);
     }
   }
 }

@@ -66,28 +66,28 @@ export default class Bill extends Vue {
     const chartWrapper = this.$refs.chartWrapper as HTMLDivElement;
     chartWrapper.scrollLeft = chartWrapper.scrollWidth;
   }
-  get polar() {
+  get chartData() {
     const array = []; //[{date:7.3,amount:100}]
-    const sameTypeRecord = clone(this.recordList).filter(
-      item => item.type === this.type
-    );
     for (let i = 0; i < 29; i++) {
       const createAt = dayjs()
         .subtract(i, "day")
         .format("YYYY-MM-DD");
-      const amount = sameTypeRecord
+      const amount = this.recordList
+        .filter(item => item.type === this.type)
         .filter(r => r.createAt === createAt)
         .reduce((sum, r) => {
           return sum + r.amount;
         }, 0);
       array.push({ date: createAt, amount: amount });
     }
-
     const arrayRange = array.sort(
       (a, b) => dayjs(a.date).valueOf() - dayjs(b.date).valueOf()
     );
-    const keys = arrayRange.map(d => d.date);
-    const values = arrayRange.map(a => a.amount);
+    return arrayRange;
+  }
+  get polar() {
+    const keys = this.chartData.map(d => d.date);
+    const values = this.chartData.map(a => a.amount);
     return {
       title: {
         text: "ECharts 入门示例"
