@@ -67,7 +67,7 @@ export default class Bill extends Vue {
     chartWrapper.scrollLeft = chartWrapper.scrollWidth;
   }
   get chartData() {
-    const array = []; //[{date:7.3,amount:100}]
+    const array = []; //[{date:7.3,amount:100,tags:['吃饭','睡觉']}]
     for (let i = 0; i < 29; i++) {
       const createAt = dayjs()
         .subtract(i, "day")
@@ -88,27 +88,46 @@ export default class Bill extends Vue {
   get polar() {
     const keys = this.chartData.map(d => d.date);
     const values = this.chartData.map(a => a.amount);
+    const type = this.typeList.filter(i => i.value === this.type)[0].text;
     return {
       title: {
-        text: "ECharts 入门示例"
+        text: `最近30天${type}`,
+        right: "10",
+        textStyle: {
+          fontSize: "18px",
+          color: "#333"
+        }
       },
-      tooltip: {},
+      tooltip: { show: true, formatter: "{a}<br/>{b}: ¥{c}" },
       grid: {
         left: 0,
         right: 0
       },
-      legend: {
-        data: ["销量"]
-      },
       xAxis: {
-        data: keys
+        data: keys,
+        axisLabel: {
+          align: "center",
+          formatter: function(value: string) {
+            return value.substr(5);
+          }
+        },
+        axisTick: {
+          show: true,
+          alignWithLabel: true
+        }
       },
-      yAxis: { axisLine: { show: false } },
+      yAxis: {
+        axisLine: { show: false }
+      },
       series: [
         {
-          name: "销量",
+          name: type,
           type: "bar",
-          data: values
+          data: values,
+          showBackground: false,
+          backgroundStyle: {
+            color: "rgba(220, 220, 220, 0.8)"
+          }
         }
       ]
     };

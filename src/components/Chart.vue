@@ -28,6 +28,6 @@ export default class EChart extends Vue {
 
 <style scoped lang="scss">
 .wrapper {
-  height: 400px;
+  height: 40vh;
 }
 </style>
