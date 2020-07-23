@@ -50,7 +50,7 @@ export default class Tags extends Vue {
 .tags {
   background: #f08629;
   font-size: 14px;
-  padding: 16px;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -58,7 +58,9 @@ export default class Tags extends Vue {
   > .current {
     display: flex;
     flex-wrap: wrap;
+    overflow: auto;
     > li {
+      display: inline-block;
       $bg: white;
       background: $bg;
       margin-right: 8px;
@@ -76,7 +78,7 @@ export default class Tags extends Vue {
   }
   > .newAdd {
     padding-top: 16px;
-
+    padding-bottom: 16px;
     > .add {
       background: transparent;
       border: none;

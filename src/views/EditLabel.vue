@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <div class="container">
     <div class="navbar">
       <Icon class="leftContent" name="left" @click="goBack" />
       <span class="middleContent">编辑标签</span>
@@ -9,7 +9,7 @@
     <div class="button-wraper">
       <Button @click="remove">删除标签</Button>
     </div>
-  </Layout>
+  </div>
 </template>
 
 <script lang="ts">
@@ -57,29 +57,32 @@ export default class EditLabel extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.navbar {
-  background: #f08629;
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  > .leftContent {
-    height: 18px;
-    width: 18px;
+.container {
+  height: 100vh;
+  .navbar {
+    background: #f08629;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    > .leftContent {
+      height: 18px;
+      width: 18px;
+    }
+    > .rightContent {
+      height: 18px;
+      width: 18px;
+    }
   }
-  > .rightContent {
-    height: 18px;
-    width: 18px;
+  .notes {
+    background: white;
+    margin-top: 16px;
+    height: 40px;
   }
-}
-.notes {
-  background: white;
-  margin-top: 16px;
-  height: 40px;
-}
-.button-wraper {
-  text-align: center;
-  padding: 16px;
-  margin-top: 44px;
+  .button-wraper {
+    text-align: center;
+    padding: 16px;
+    margin-top: 44px;
+  }
 }
 </style>

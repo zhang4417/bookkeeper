@@ -75,6 +75,8 @@ export default class Labels extends Vue {
 }
 .newTags {
   text-align: center;
-  margin-top: 44px;
+  padding-bottom: 36px;
+  padding-top: 36px;
+  margin: 16px auto;
 }
 </style>
