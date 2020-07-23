@@ -3,7 +3,12 @@
     <Layout prefix="layout">
       <NumberPad :value.sync="record.amount" @saveRecord="saveRecord()" :success.sync="success" />
       <Tabs :dataSource="typeList" :value.sync="record.type" classPrefix="type" />
-      <Notes fileName="备注" maxlength="20" placeholder="请在这里输入备注，20字符以内" :inputValue.sync="record.notes" />
+      <Notes
+        fileName="备注"
+        maxlength="20"
+        placeholder="请在这里输入备注，20字符以内"
+        :inputValue.sync="record.notes"
+      />
       <Notes fileName="日期" inputType="date" :inputValue.sync="record.createAt" />
       <Tags @update:value="onchangeTags" />
     </Layout>
@@ -51,10 +56,14 @@ export default class Money extends Vue {
       this.success = false;
       return window.alert("请选择一个标签");
     }
+    if (this.record.createAt === "") {
+      this.success = false;
+      return window.alert("请选择一个日期");
+    }
     this.success = true;
     this.$store.commit("addRecord", this.record);
     this.record.notes = "";
-    window.alert("已保存");
+    return window.alert("已保存");
   }
 }
 </script>
