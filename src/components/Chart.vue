@@ -13,7 +13,8 @@ export default class EChart extends Vue {
   @Prop() options?: EChartOption;
   @Watch("options")
   onOptionsChanged(newVal: EChartOption) {
-    this.myChart!.setOption(newVal);
+    if (this.myChart === undefined) return;
+    this.myChart.setOption(newVal);
   }
   mounted() {
     if (this.options === undefined) {
