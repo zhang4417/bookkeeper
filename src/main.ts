@@ -25,7 +25,7 @@ window.onload = function () {
 if (document.documentElement.clientWidth > 500) {
   window.alert('请扫描二维码用手机打开')
   const img = document.createElement('img')
-  img.src = './erWeiMa.png'
+  img.src = './qrCode.png'
   img.style.position = 'fixed'
   img.style.left = '50%'
   img.style.top = '50%'
